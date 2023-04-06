@@ -1,3 +1,5 @@
+Written in: C   
+   
 As our Senior Design project, my team decided to work on ways of allowing those in the blind and visually imparied (BVI) community to have access/ease-of-use for virtual reality by using multi-modal orientation.    
     
 To achieve this, we implemented 4 means of orientation: partial vision, haptic, audio, and sonar. What is in this folder is the sonar tool as this is what I was in charge of.       

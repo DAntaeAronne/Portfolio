@@ -3,4 +3,4 @@ Each folders contain both code samples pulled from various projects I have worke
      
 The recommended order to view each project is as follows:     
 1.) Sonar in VR    
-2.) Shape detection and labeling    
+2.) AI Shape Detection and Labeling    

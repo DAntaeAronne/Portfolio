@@ -1,5 +1,6 @@
 # Portfolio
-All projects are separated by folders which contain both code samples and a brief description of the sample     
+Each folders contain both code samples pulled from various projects I have worked on and a brief description of the sample     
      
 The recommended order to view each project is as follows:     
 1.) Sonar in VR    
+2.) Shape detection and labeling    

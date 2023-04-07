@@ -15,7 +15,7 @@
 lexeme *list;
 int lex_index;
 char reserved[13][30] = {"const", "var", "procedure", "call", "if", "then", "else", "while", "do", "begin", "end", "read", "write"};
-char symbols[19][5] = {"==", "!=", "<", "<=", ">", ">=", "*", "/", "+", "-", "(", ")", ",", ".", ";", ":=", "&&", "||", "!"};
+char symbols[16][5] = {"==", "!=", "<", "<=", ">", ">=", "*", "/", "+", "-", "(", ")", ",", ".", ";", ":="};
 
 void printlexerror(int type);
 void printtokens();
@@ -44,49 +44,11 @@ lexeme *lexanalyzer(char *input, int printFlag)
     // While the current character is not a whitespace, comma, or semicolon
     // add the the character to a string which is the current word
     while(!iscntrl(input[i]) && !isspace(input[i]) && (input[i] != ',') && (input[i] != ';') && (input[i] != '\t') && (input[i] != '.')){
-      
-      if(input[i] == '('){
-        Current[CurIn] = input[i];
-        
-        if(input[i + 1] == ' '){
-          CurIn++;
-          i++;
-          break;
-        }
-        
-        if(input[i + 1] != ' '){
-          CurIn++;
-          break;
-        }
-      }
-      
-      if(input[i] == ')'){
-        if(CurIn > 0){
-          i--;
-          break;
-        }
-        
-        else{
-          if(input[i + 1] == ' '){
-            Current[CurIn] = input[i];
-            CurIn++;
-            i++;
-            break;
-          }
-          
-          else{
-            Current[CurIn] = input[i];
-            CurIn++;
-            break;
-          }
-        }
-      }
-      
       Current[CurIn] = input[i];
       CurIn++;
       i++;
     } // End of While
-    
+      
     // If Current is the start of a comment
     // Then flag ignore
     if((strcmp(Current,"/*") == 0)){
@@ -162,7 +124,7 @@ lexeme *lexanalyzer(char *input, int printFlag)
       // If the token hasn't been found
       // Then check to see if the token is a symbol    
       if(!TokenFound){
-        for(j = 0; j < 19; j++){
+        for(j = 0; j < 16; j++){
           // If the token is a symbol then set the type and flag TokenFound
           if(strcmp(Current, symbols[j]) == 0){     
             tokenizeType(symbols[j]);
@@ -308,15 +270,6 @@ void tokenizeType(char* sym){
 	else if (strcmp(sym,":=") == 0){
     list[lex_index].type = assignsym;
 	}
-  else if (strcmp(sym,"&&") == 0){
-    list[lex_index].type = andsym;
-  }
-  else if (strcmp(sym,"||") == 0){
-    list[lex_index].type = orsym;
-  }
-  else if (strcmp(sym,"!") == 0){
-    list[lex_index].type = notsym;
-  }
 	else if (strcmp(sym,"begin") == 0){
     list[lex_index].type = beginsym;
 	}
@@ -362,7 +315,7 @@ void tokenizeType(char* sym){
 	else if (strcmp(sym,"num") == 0){
 	  list[lex_index].type = numbersym;
 	}
-  
+
 }
 
 
@@ -469,15 +422,6 @@ void printtokens()
 				break;
 			case numbersym:
 				printf("%11d\t%d", list[i].value, numbersym);
-				break;
-      case andsym:
-				printf("%11s\t%d", "&&", andsym);
-				break;
-			case orsym:
-				printf("%11s\t%d", "||", orsym);
-				break;
-			case notsym:
-				printf("%11s\t%d", "!", notsym);
 				break;
 		}
 		printf("\n");

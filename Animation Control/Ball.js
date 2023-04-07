@@ -54,18 +54,18 @@ export default class Balls
      */
     createStandardBall(x = 500, y = 350)
     {
+        // Adds regular ball sprite to the scene
         this.ball = this.scene.add.sprite(x, y, this.key).setScale(0.85)
         this.createSprite()
         this.ball.play('Reg')
         this._group.add(this.ball)
 
         this.ball.setData('lock', false)
-
+        
+        // Sets the balls body and allows for collision
         let radius = this.ball.body.sourceHeight / 2
         this.ball.body.setCircle(radius)
-
-        // These values are not tested and will very likely need to be modified
-        // as I have no idea what they're like yet.
+        
         this.ball.body.setCollideWorldBounds(true)
         this.ball.body.setBounce(.5, .5)
         this.ball.body.setMass(50)

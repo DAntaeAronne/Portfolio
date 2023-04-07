@@ -62,7 +62,8 @@ export default class Balls
 
         this.ball.setData('lock', false)
         
-        // Sets the balls body and allows for collision
+        // Sets the balls body and physics body 
+        // Allows collision 
         let radius = this.ball.body.sourceHeight / 2
         this.ball.body.setCircle(radius)
         

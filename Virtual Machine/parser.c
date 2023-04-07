@@ -41,7 +41,6 @@ void Condition(lexeme *list);
 void Expression(lexeme *list);
 void Term(lexeme *list);
 void Factor(lexeme *list);
-void Logic(lexeme *list);
 
 
 instruction *parse(lexeme *list, int printTable, int printCode)
@@ -462,7 +461,6 @@ void Statement(lexeme *list){
     // If it isn't end but is "identifier, read, write, begin, call, if, or while" instead
     // Then call error 15 and stop
     if(list[lIndex].type != endsym && (list[lIndex].type == identsym || list[lIndex].type == readsym || list[lIndex].type == writesym || list[lIndex].type == beginsym || list[lIndex].type == callsym || list[lIndex].type == ifsym || list[lIndex].type == whilesym)){
-      printf("15: %d", list[lIndex].value);
       printparseerror(15);
       errflg = 1;
       return;
@@ -484,7 +482,7 @@ void Statement(lexeme *list){
   // If Statement
   if(list[lIndex].type == ifsym){
     lIndex++;
-    Logic(list);
+    Condition(list);
     if(errflg){
       return;
     } // end of errflg if
@@ -536,7 +534,7 @@ void Statement(lexeme *list){
     int loopIndex = cIndex;
     
     lIndex++;
-    Logic(list);
+    Condition(list);
     if(errflg){
       return;
     } // end of errflg if
@@ -668,109 +666,90 @@ void Statement(lexeme *list){
 
 // Handles conditional Operators:
 void Condition(lexeme *list){
-  if(list[lIndex].type == lparensym){
-    lIndex++;
-    Logic(list);
-    if(errflg){
-      return;
-    } // end of errflg if
+  Expression(list);
+  if(errflg){
+    return;
+  } // end of errflg if
 
-    if(list[lIndex].type != rparensym){
-      printparseerror(12);
-      errflg = 1;
-      return;
-    } // end of error if
-    
+  // Operator "=="
+  if(list[lIndex].type == eqlsym){
     lIndex++;
-  } // end of lparensym if
-
-  else{
     Expression(list);
     if(errflg){
       return;
     } // end of errflg if
+    // EQL
+    emit(2, 0, 6);
+    RegSpace--;
+  } // End of eqlsym if
 
-    // Operator "=="
-    if(list[lIndex].type == eqlsym){
-      lIndex++;
-      Expression(list);
-      if(errflg){
-        return;
-      } // end of errflg if
-      // EQL
-      emit(2, 0, 6);
-      RegSpace--;
-    } // End of eqlsym if
-
-    // Operator "!="
-    else if(list[lIndex].type == neqsym){
-      lIndex++;
-      Expression(list);
-      if(errflg){
-        return;
-      } // end of errflg if
-      // NEQ
-      emit(2, 0, 7);
-      RegSpace--;
-    } // End of neqsym if
-    
-    // Operator "<"
-    else if(list[lIndex].type == lsssym){
-      lIndex++;
-      Expression(list);
-      if(errflg){
-        return;
-      } // end of errflg if
-      // LSS
-      emit(2, 0, 8);
-      RegSpace--;
-    } // End of lsssym if
-
-    // Operator "<="
-    else if(list[lIndex].type == leqsym){
-      lIndex++;
-      Expression(list);
-      if(errflg){
-        return;
-      } // end of errflg if    
-      // LEQ
-      emit(2, 0, 9);
-      RegSpace--;
-    } // End of leqsym if
-
-    // Operator ">"
-    else if(list[lIndex].type == gtrsym){
-      lIndex++;
-      Expression(list);
-      if(errflg){
-        return;
-      } // end of errflg if
-      // GTR
-      emit(2, 0, 10);
-      RegSpace--;
-    } // End of gtrsym if
-
-    // Operator ">="
-    else if(list[lIndex].type == geqsym){
-      lIndex++;
-      Expression(list);
-      if(errflg){
-        return;
-      } // end of errflg if    
-      // GEQ
-      emit(2, 0, 11);
-      RegSpace--;
-    } // End of geqsym if
-
-    // Error for when there is no conditional operator in the if statement.
-    else
-    {
-      printparseerror(10);
-      errflg = 1;
+  // Operator "!="
+  else if(list[lIndex].type == neqsym){
+    lIndex++;
+    Expression(list);
+    if(errflg){
       return;
-    } // End of else
-  } // End of else
+    } // end of errflg if
+    // NEQ
+    emit(2, 0, 7);
+    RegSpace--;
+  } // End of neqsym if
+    
+  // Operator "<"
+  else if(list[lIndex].type == lsssym){
+    lIndex++;
+    Expression(list);
+    if(errflg){
+      return;
+    } // end of errflg if
+    // LSS
+    emit(2, 0, 8);
+    RegSpace--;
+  } // End of lsssym if
 
+  // Operator "<="
+  else if(list[lIndex].type == leqsym){
+    lIndex++;
+    Expression(list);
+    if(errflg){
+      return;
+    } // end of errflg if    
+    // LEQ
+    emit(2, 0, 9);
+    RegSpace--;
+  } // End of leqsym if
+
+  // Operator ">"
+  else if(list[lIndex].type == gtrsym){
+    lIndex++;
+    Expression(list);
+    if(errflg){
+      return;
+    } // end of errflg if
+    // GTR
+    emit(2, 0, 10);
+    RegSpace--;
+  } // End of gtrsym if
+
+  // Operator ">="
+  else if(list[lIndex].type == geqsym){
+    lIndex++;
+    Expression(list);
+    if(errflg){
+      return;
+    } // end of errflg if    
+    // GEQ
+    emit(2, 0, 11);
+    RegSpace--;
+  } // End of geqsym if
+
+  // Error for when there is no conditional operator in the if statement.
+  else
+  {
+    printparseerror(10);
+    errflg = 1;
+    return;
+  } // End of else
 } // End of Condition
 
 
@@ -839,8 +818,6 @@ void Expression(lexeme *list){
     errflg = 1;
     return;
   } // End of if
-  
-  //lIndex++;
 } // End of Expression
 
 
@@ -938,50 +915,6 @@ void Factor(lexeme *list){
 
   lIndex++;
 } // end of Factor
-
-
-void Logic(lexeme *list){
-  if(list[lIndex].type == notsym){
-    lIndex++;
-    Condition(list);
-    if(errflg){
-      return;
-    } // end of errflg if
-    emit(2, 0 , 14); // Emit NOT
-  } // end of if
-
-  else{
-    Condition(list);
-    if(errflg){
-      return;
-    } // end of errflg if
-    
-    while(list[lIndex].type == andsym || list[lIndex].type == orsym){
-      if(list[lIndex].type == andsym){
-        lIndex++;
-        Condition(list);
-        if(errflg){
-          return;
-        } // end of errflg if
-        
-        emit(2, 0, 12); // Emit AND
-        RegSpace--;
-      } // end of andsym if
-
-      else{
-        lIndex++;
-        Condition(list);
-        if(errflg){
-          return;
-        } // end of errflg if
-        
-        emit(2, 0, 13); // Emit ORR
-        RegSpace--;
-      } // end of orsym if
-    } // end of while
-  } // end of else
-
-} // end of Logic
 
 
 // adds a line of code to the program
@@ -1189,15 +1122,6 @@ void printassemblycode()
 						break;
 					case 11:
 						printf("GEQ\t");
-						break;
-					case 12:
-						printf("AND\t");
-						break;
-					case 13:
-						printf("ORR\t");
-						break;
-					case 14:	
-						printf("NOT\t");
 						break;
 					default:
 						printf("err\t");

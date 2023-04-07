@@ -1,4 +1,4 @@
-# Portfolio
+# D'Antae Aronne's Portfolio
 Each folders contain code samples pulled from various projects I have worked on along a brief description of the sample     
      
 The recommended order to view each project is as follows:     

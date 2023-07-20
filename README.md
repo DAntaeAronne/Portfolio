@@ -3,8 +3,8 @@ Each folders contain code samples pulled from various projects I have worked on 
      
 The descending order of the last modified projects:    
 1.) Undergraduate Research    
-     1.) Raven Progressive Matrix Solver    
-     2.) AI Shape Detection and Labeling     
+       1a.) Raven Progressive Matrix Solver    
+       1b.) AI Shape Detection and Labeling     
 2.) Sonar in VR    
 3.) Animation Control     
 4.) Virtual Machine     

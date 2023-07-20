@@ -1,8 +1,10 @@
 # D'Antae Aronne's Portfolio
 Each folders contain code samples pulled from various projects I have worked on along a brief description of the sample     
      
-The recommended order to view each project is as follows:     
-1.) Virtual Machine    
+The descending order of the last modified projects:    
+1.) Undergraduate Research
+     1.) Raven Progressive Matrix Solver
+     2.) AI Shape Detection and Labeling
 2.) Sonar in VR    
 3.) Animation Control     
-4.) AI Shape Detection and Labeling    
+4.) Virtual Machine     

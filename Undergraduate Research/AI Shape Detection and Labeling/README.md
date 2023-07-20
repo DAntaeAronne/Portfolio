@@ -1,0 +1,7 @@
+Written in: Python
+
+For undergraduate research, my partner and I were given the opportunity to train network to solve Raven's Progressive Matrices (RPM) with supervised learning.
+
+For context, an RPM is a is 3x3 matrix in which the rows follow the same specific pattern though the shapes, size, and/or color of the shapes may vary accordingly. Only the first 2 rows are completely filled out with the 3rd row only having the first 2 columns filled. The last space is left empty as it is to be filled with one of the 8 answer choices, the correct answer choice would be the one that best fits the 3rd row following the pattern. The focus of RPM's being on pattern recognition, problem solving, and adaptability.
+
+In this code sample the user is prompted to input 1 of the 9 pattern types used in training, from there the corresponding folder containing the training is found and lists the directory. The list is gone through, passing each image one at a time for the AI to read. Once the image is received it is then adjusted to be easier to read for the AI who then determines the shapes inside and prints out a copy of the image containing labels and outlines for the shape for us to see if it is correctly detecting and labeling them. It then waits until we press a button to have it move on to the next image, which was done to give us proper time to study the image as well as have time to stop the execution of the code if we started to notice a pattern in what/why it was getting them incorrect if it was at all.

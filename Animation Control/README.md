@@ -1,6 +1,6 @@
 Written in: JavaScript   
    
-Full Game with code and instructions available here:https://github.com/jakenorris1124/COP3441-Project3-Group1
+Full Game with code, instructions, and images/json files creadted available here: https://github.com/jakenorris1124/COP3441-Project3-Group1
    
 For my Processes of Object-Oriented Software class, my team was tasked with making a puzzle game. The game consisted of trying to get a ball on one side of the level to get to the goal on the other side using different parts to avoid obstacles for this I was put in charge of animation, both in terms of drawing/creating the assets and putting them into the game in which certain conditions would change the animation smoothly. The file above is one such instance of adding the sprite into the game and having it change depending on the conditions.  
    

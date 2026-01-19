@@ -1,0 +1,36 @@
+    cout << "\n\n";
+    cout << "Are we alive?\n";
+
+    if (MC.isAlive()){
+        cout << "yes";
+    }
+    else {
+        cout << "dead as dirt";
+        return 0;
+    }
+
+    cout << "\n";
+    cout << "Seems you have " << MC.getCurHealth() << " hp left..\n";
+    cout << "catch *throws knife*\n\n";
+
+    MC.takeDmg(12);
+
+    cout << "How are you now?\n";
+    cout << "Seems you have " << MC.getCurHealth() << " hp left..\n";
+    cout << "catch *throws knife*\n\n";
+
+    MC.takeDmg(MC.getCurHealth() + 10);
+
+    cout << "Well, still around?\n";
+    if (MC.isAlive()){
+        cout << "yes";
+    }
+    else {
+        cout << "dead as dirt";
+        return 0;
+    }
+
+    cout << "\n";
+    cout << "HOW?!?!\n";
+    cout << "With " << MC.getCurHealth() << " hp left?!?!\n";
+    cout << "Cheater";

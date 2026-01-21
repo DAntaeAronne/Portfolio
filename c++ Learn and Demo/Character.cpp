@@ -20,52 +20,75 @@ Character::Character(int maxHp, int dmg, int def, int critC, int critDmg){
     defending = false;
     critHit = false;
 
-    equipmentBonus.maxHealth = 0;
-    equipmentBonus.attackDmg = 0;
-    equipmentBonus.defense = 0;
-    equipmentBonus.critChance = 0;
-    equipmentBonus.critDmgMod = 0;
-}
+    for (int i = static_cast<int>(Equipment::weapon); i < static_cast<int>(Equipment::count); i++){
+        equipmentBonus[i].maxHealth = 0;
+        equipmentBonus[i].attackDmg = 0;
+        equipmentBonus[i].defense = 0;
+        equipmentBonus[i].critChance = 0;
+        equipmentBonus[i].critDmgMod = 0;
+    };
+} // End of Character initialization
 
-int Character::getBaseStat(string wantedStat){
-    if (wantedStat == "maxHp"){
-        return baseStats.maxHealth;
-    }
-    else if (wantedStat == "dmg"){
-        return baseStats.attackDmg;
-    }
-    else if (wantedStat == "def"){
-        return baseStats.defense;
-    }
-    else if (wantedStat == "critC"){
-        return baseStats.critChance;
-    }
-    else if (wantedStat ==  "critDmg"){
-        return baseStats.critDmgMod;
+
+int Character::getBaseStat(EnumStats wantedStat){
+    switch (wantedStat){
+        case EnumStats::maxHealth:
+            return baseStats.maxHealth;
+
+        case EnumStats::attackDmg:
+            return baseStats.attackDmg;
+
+        case EnumStats::defense:
+            return baseStats.defense;
+
+        case EnumStats::critChance:
+            return baseStats.critChance;
+
+        case EnumStats::critDmgMod:
+            return baseStats.critDmgMod;
     }
 
     return 0;
 } // End of getBaseStat method
 
 
-int Character::getEquipStat(string wantedStat){
-    if (wantedStat == "maxHp"){
-        return equipmentBonus.maxHealth;
-    }
-    else if (wantedStat == "dmg"){
-        return equipmentBonus.attackDmg;
-    }
-    else if (wantedStat == "def"){
-        return equipmentBonus.defense;
-    }
-    else if (wantedStat == "critC"){
-        return equipmentBonus.critChance;
-    }
-    else if (wantedStat ==  "critDmg"){
-        return equipmentBonus.critDmgMod;
+int Character::getEquipStat(EnumStats wantedStat){
+
+    int statVal = 0;
+
+    switch (wantedStat){
+        case EnumStats::maxHealth:
+            for (int i = static_cast<int>(Equipment::weapon); i < static_cast<int>(Equipment::count); i++){
+                statVal += equipmentBonus[i].maxHealth;
+            };
+            break;
+
+        case EnumStats::attackDmg:
+            for (int i = static_cast<int>(Equipment::weapon); i < static_cast<int>(Equipment::count); i++){
+                statVal += equipmentBonus[i].attackDmg;
+            };
+            break;
+
+        case EnumStats::defense:
+            for (int i = static_cast<int>(Equipment::weapon); i < static_cast<int>(Equipment::count); i++){
+                statVal += equipmentBonus[i].defense;
+            };
+            break;
+
+        case EnumStats::critChance:
+            for (int i = static_cast<int>(Equipment::weapon); i < static_cast<int>(Equipment::count); i++){
+                statVal += equipmentBonus[i].critChance;
+            };
+            break;
+
+        case EnumStats::critDmgMod:
+            for (int i = static_cast<int>(Equipment::weapon); i < static_cast<int>(Equipment::count); i++){
+                statVal += equipmentBonus[i].critDmgMod;
+            };
+            break;
     }
 
-    return 0;
+    return statVal;
 } // End of getEquipStat method
 
 
@@ -74,40 +97,53 @@ int Character::getCurHealth(){
 } // End of getCurHealth method
 
 
-void setBaseStat(std::string wantedStat, int val){
-    if (wantedStat == "maxHp"){
-        baseStats.maxHealth = val;
+void Character::setBaseStat(EnumStats wantedStat, int val){
+    switch (wantedStat){
+        case EnumStats::maxHealth:
+            baseStats.maxHealth = val;
+            break;
+
+        case EnumStats::attackDmg:
+            baseStats.attackDmg = val;
+            break;
+
+        case EnumStats::defense:
+            baseStats.defense = val;
+            break;
+
+        case EnumStats::critChance:
+            baseStats.critChance = val;
+            break;
+
+        case EnumStats::critDmgMod:
+            baseStats.critDmgMod = val;
+            break;
     }
-    else if (wantedStat == "dmg"){
-        baseStats.attackDmg = val;
-    }
-    else if (wantedStat == "def"){
-        baseStats.defense = val;
-    }
-    else if (wantedStat == "critC"){
-        baseStats.critChance = val;
-    }
-    else if (wantedStat ==  "critDmg"){
-        baseStats.critDmgMod = val;
-    }
+
 } // End of setBaseStat method
 
 
-void setEquipStat(std::string wantedStat, int val){
-    if (wantedStat == "maxHp"){
-        equipmentBonus.maxHealth = val;
-    }
-    else if (wantedStat == "dmg"){
-        equipmentBonus.attackDmg = val;
-    }
-    else if (wantedStat == "def"){
-        equipmentBonus.defense = val;
-    }
-    else if (wantedStat == "critC"){
-        equipmentBonus.critChance = val;
-    }
-    else if (wantedStat ==  "critDmg"){
-        equipmentBonus.critDmgMod = val;
+void Character::setEquipStat(EnumStats wantedStat, int val, Equipment item){
+    switch (wantedStat){
+        case EnumStats::maxHealth:
+            equipmentBonus[static_cast<int>(item)].maxHealth = val;
+            break;
+
+        case EnumStats::attackDmg:
+            equipmentBonus[static_cast<int>(item)].attackDmg = val;
+            break;
+
+        case EnumStats::defense:
+            equipmentBonus[static_cast<int>(item)].defense = val;
+            break;
+
+        case EnumStats::critChance:
+            equipmentBonus[static_cast<int>(item)].critChance = val;
+            break;
+
+        case EnumStats::critDmgMod:
+            equipmentBonus[static_cast<int>(item)].critDmgMod = val;
+            break;
     }
 } // End of setEquipStat method
 
@@ -133,13 +169,13 @@ void Character::takeDmg(double dmgTaken){
     // If not defending
     //   Then take damage with only passive defense in mind
     if (!defending){
-        totalDmgTaken = dmgTaken * (100.00 / (100 + baseStats.defense + equipmentBonus.defense));
+        totalDmgTaken = dmgTaken * (100.00 / (100 + baseStats.defense + getEquipStat(EnumStats::defense)));
     }
 
     // Else
     //   Mulltipy total defense stat by 3
     else{
-        totalDmgTaken = dmgTaken * (100.00 / (100 + 3 * (baseStats.defense + equipmentBonus.defense)));
+        totalDmgTaken = dmgTaken * (100.00 / (100 + 3 * (baseStats.defense + getEquipStat(EnumStats::defense))));
     }
 
     std::cout << "\ntook " << totalDmgTaken << " dmg\n";
@@ -151,15 +187,15 @@ int Character::calcAttackDmg(){
     // Regardless of the number generated,
     //  the character needs to have a critChance above 0 for crits to be available
 
-    int dmgDealt = randomNumber() % (baseStats.attackDmg + equipmentBonus.attackDmg);
+    int dmgDealt = randomNumber() % (baseStats.attackDmg + getEquipStat(EnumStats::attackDmg));
 
-    if (((randomNumber() % 100) < (baseStats.critChance + equipmentBonus.critChance)) && ((baseStats.critChance + equipmentBonus.critChance) > 0)){
+    if (((randomNumber() % 100) < (baseStats.critChance + getEquipStat(EnumStats::critChance))) && ((baseStats.critChance + getEquipStat(EnumStats::critChance)) > 0)){
         critHit = true;
         std::cout << "- WOAH!!! NICE CRIT!!! - ";
     }
 
     if (critHit){
-        dmgDealt = dmgDealt * (1.0 + (double)(baseStats.critDmgMod + equipmentBonus.critDmgMod) / 100);
+        dmgDealt = dmgDealt * (1.0 + (double)(baseStats.critDmgMod + getEquipStat(EnumStats::critDmgMod)) / 100);
     }
 
     return dmgDealt;

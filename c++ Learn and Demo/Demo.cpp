@@ -13,11 +13,13 @@ int main(){
 
     srand(time(0));
     int choice;
-    string statsNames[5] = {"maxHp", "dmg", "def", "critC", "critDmg"};
+    string statsNames[5] = {"maxHealth", "attackDmg", "defense", "critChance", "critDmgMod"};
 
     Character MC(150, 250, 6, 0, 900);
-    for (int i = 0; i < 5; i++){
-        cout << statsNames[i] << ": " << MC.getBaseStat(statsNames[i]) << "\n";
+    for (int i = 0; i < static_cast<int>(Character::EnumStats::count); i++){
+
+        Character::EnumStats statCheck = static_cast<Character::EnumStats>(i);
+        cout << statsNames[i] << ": " << MC.getBaseStat(statCheck) << "\n";
     }
 
     cout << "\n\n";
@@ -64,6 +66,11 @@ int main(){
     for (int i = 0; i < 10; i++){
         cout << "(you did " << MC.calcAttackDmg() << " dmg. Nice)\n";
     }
+
+    cout << "\n\n\n\n\n";
+    cout << "test: \n";
+    cout << "max health: " << MC.getBaseStat(Character::EnumStats::maxHealth) << "\n\n";
+    cout << "cur health: " << MC.getCurHealth();
 
     return 0;
 }

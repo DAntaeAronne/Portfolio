@@ -6,7 +6,7 @@
 class Character{
     public:
         Character(int hp, int dmg, int def, int critC, int critDmg);
-        struct stats {
+        struct Stats {
             int maxHealth;
             int attackDmg;
             int defense;
@@ -14,14 +14,30 @@ class Character{
             int critDmgMod;
         };
 
+        enum struct EnumStats{
+            maxHealth,
+            attackDmg,
+            defense,
+            critChance,
+            critDmgMod,
+            count,
+        };
+
+        enum struct Equipment{
+            weapon,
+            armor,
+            helmet,
+            count,
+        };
+
         // Accessors
-        int getBaseStat(std::string wantedStat);
-        int getEquipStat(std::string wantedStat);
+        int getBaseStat(EnumStats wantedStat);
+        int getEquipStat(EnumStats wantedStat);
         int getCurHealth();
 
         // Modifiers
-        void setBaseStat(std::string wantedStat, int val);
-        void setEquipStat(std::string wantedStat, int val);
+        void setBaseStat(EnumStats wantedStat, int val);
+        void setEquipStat(EnumStats wantedStat, int val, Equipment item);
         void setCurHeatlh(int val);
         void setDefending(bool val);
 
@@ -32,8 +48,8 @@ class Character{
         void resetTurn();
 
     private:
-        stats baseStats;
-        stats equipmentBonus;
+        Stats baseStats;
+        Stats equipmentBonus[3];
         int curHealth;
         bool defending;
         bool critHit;
